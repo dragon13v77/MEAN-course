@@ -1,0 +1,29 @@
+{
+  "name": "mean-course",
+  "version": "1.0.0",
+  "description": "MEAN stack application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dragon13v77/MEAN-course.git"
+  },
+  "keywords": [
+    "mean"
+  ],
+  "author": "Dalibor Ristic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dragon13v77/MEAN-course/issues"
+  },
+  "homepage": "https://github.com/dragon13v77/MEAN-course#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.2"
+  }
+}
