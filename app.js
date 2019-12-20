@@ -6,6 +6,12 @@ const app = express();
 // set constant in express
 app.set('port', 3000);
 
+// next -
+app.use('/css', function(req, res, next) {
+	console.log(req.method, req.url);
+	next();
+});
+
 // set static resources path
 // define subset of routs with first argument `/public`
 app.use(express.static(path.join(__dirname, 'public')));
