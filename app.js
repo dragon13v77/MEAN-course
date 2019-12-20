@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const routes = require('./api/routes');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -21,6 +22,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //		.status(200)
 //		.sendFile(path.join(__dirname, 'public', 'index.html'));
 //});
+
+
+app.use(bodyParser.urlencoded({
+	extended: false //only need strings and arrays
+}));
 
 app.use('/api', routes);
 
