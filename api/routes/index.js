@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const ctrlHotels = require('../controllers/hotels.controllers');
 
 router

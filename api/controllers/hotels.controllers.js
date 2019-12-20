@@ -24,6 +24,7 @@ module.exports.hotelsGetOne = function(req, res) {
 };
 
 module.exports.hotelsAddOne = function(req, res) {
+	console.log('Hotels add one');
 	console.log(req.body);
 	res
 		.status(200)
