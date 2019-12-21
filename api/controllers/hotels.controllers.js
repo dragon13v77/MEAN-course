@@ -132,33 +132,44 @@ module.exports.hotelsGetOne = function (req, res) {
 		});
 };
 
+var _splitArray = function(input) {
+	var output;
+	if (input && input.length > 0) {
+		output = input.split(";");
+	} else {
+		output = [];
+	}
+	return output;
+};
+
 module.exports.hotelsAddOne = function (req, res) {
-	// database connection - permanent
-	const db = dbconn.get();
-	const collection = db.collection('hotels');
-	var newHotel;
 
-
-	console.log('Hotels add one');
-
-	if (req.body && req.body.name && req.body.stars) {
-		console.log(req.body);
-
-		newHotel = req.body;
-		newHotel.stars = parseInt(newHotel.stars, 10);
-
-		collection
-			.insertOne(newHotel, function (err, response) {
-				console.log(response);
+	Hotel
+		.create({
+			name : req.body.name,
+			description : req.body.description,
+			stars : parseInt(req.body.stars,10),
+			services : _splitArray(req.body.services),
+			photos : _splitArray(req.body.photos),
+			currency : req.body.currency,
+			location : {
+				address : req.body.address,
+				coordinates : [parseFloat(req.body.lng), parseFloat(req.body.lat)]
+			}
+		}, function(err, hotel) {
+			if (err) {
+				console.log("Error creating hotel");
+				res
+					.status(400)
+					.json(err);
+			}
+			else {
+				console.log("Hotel created!", hotel);
 				res
 					.status(201)
-					.json(response.ops);
-			})
-	}
-	else {
-		console.log("Data missing from the body");
-		res
-			.status(400)
-			.json({message: "Required data missing from body"});
-	}
+					.json(hotel);
+			}
+		});
+
+
 };
