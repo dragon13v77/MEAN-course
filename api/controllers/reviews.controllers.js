@@ -92,6 +92,8 @@ module.exports.reviewsAddOne = function(req, res) {
 					.json(response.message);
 			}
 		});
+};
 
+module.exports.reviewsUpdateOne = function(req, res) {
 
 };
