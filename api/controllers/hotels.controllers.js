@@ -1,10 +1,66 @@
 var mongoose = require('mongoose');
 var Hotel = mongoose.model('Hotel');
 
+var runGeoQuery = function(req, res) {
+
+	var lng = parseFloat(req.query.lng);
+	var lat = parseFloat(req.query.lat);
+
+	// a geoJson point that Mongoose understand and will use to query
+	var point = {
+		type: "Point",
+		coordinates: [lng, lat]
+	};
+
+	Hotel
+		.aggregate(
+		[
+			{
+				'$geoNear': {
+					near: point,
+					maxDistance: 2000,
+					distanceField: 'dist.calculated',
+					spherical: true
+				}
+			}
+		],
+		function(err, results) {
+			if (err) {
+				console.log("Error", err);
+			}
+			console.log('Geo results', results);
+			res
+				.status(200)
+				.json(results);
+		}
+	);
+
+
+	// Old version of Mongoose
+	//var geoOptions = {
+	//	spherical: true,
+	//	maxDistance: 2000,
+	//	num: 5
+	//};
+	//Hotel
+	//	.geoNear(point, geoOptions, function(err, results, stats) {
+	//		console.log('Geo results', results);
+	//		console.log('Geo stats', stats);
+	//		res
+	//			.status(200)
+	//			.json(results);
+	//	});
+};
+
 module.exports.hotelsGetAll = function(req, res) {
 
 	var offset = req.query && req.query.offset && parseInt(req.query.offset, 10) || 0;
 	var count = req.query && req.query.count && parseInt(req.query.count, 10) || 5;
+
+	if ( req.query && req.query.lat && req.query.lng) {
+		runGeoQuery(req, res);
+		return;
+	}
 
 	Hotel
 		.find()
