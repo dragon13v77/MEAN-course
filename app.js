@@ -1,3 +1,4 @@
+require('./api/data/dbconnection.js').open();
 const express = require('express');
 const path = require('path');
 const routes = require('./api/routes');
