@@ -28,10 +28,14 @@ app.use('/node_modules', express.static(__dirname + '/node_modules'));
 //});
 
 
+// enable parsing of posted forms
 app.use(bodyParser.urlencoded({
 	extended: false //only need strings and arrays
 }));
+app.use(bodyParser.json());
 
+
+// add some routing
 app.use('/api', routes);
 
 const server = app.listen(app.get('port'), function() {

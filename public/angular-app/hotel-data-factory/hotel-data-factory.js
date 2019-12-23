@@ -5,6 +5,9 @@ angular.module('meanhotel').factory('hotelDataFactory', ['$http', function($http
 		},
 		hotelDisplay: function(id) {
 			return $http.get('/api/hotels/' + id).then(complete).catch(failed);
+		},
+		postReview: function(id, review) {
+			return $http.post('/api/hotels/' + id + '/reviews', review).then(complete).catch(failed);
 		}
 	}
 }]);
